@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+
+<!-- JQuery -->
+<script src="js/jquery/jquery-1.7.1.min.js"></script>
+<script src="js/jquery/jquery.ui.core.min.js"></script>
+<script src="js/jquery/jquery.ui.widget.min.js"></script>
+<script src="js/jquery/jquery.ui.position.min.js"></script>
+<script src="js/jquery/jquery.ui.autocomplete.min.js"></script>
+
+<link rel="stylesheet" href="js/jquery/smoothness/jquery-ui-1.8.16.custom.css"/>
+  
+<script>var data = [
+		{"label" : "Aragorn"},
+		{"label" : "Arwen"},
+		{"label" : "Bilbo Baggins"},
+		{"label" : "Boromir"},
+		{"label" : "Frodo Baggins"},
+		{"label" : "Gandalf"},
+		{"label" : "Gimli"},
+		{"label" : "Gollum"},
+		{"label" : "Legolas"},
+		{"label" : "Meriadoc Merry Brandybuck"},
+		{"label" : "Peregrin Pippin Took"},
+		{"label" : "Samwise Gamgee"}
+		];
+		$(function() {
+
+	$( "#schoolTags" ).autocomplete(
+	{
+		 source:data
+	})
+});
+</script>
+  
+</head>
+
+<body>
+
+ <input type="text" id="schoolTags">
+ 
+ 
+</body>
+</html>
