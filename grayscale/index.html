@@ -87,6 +87,10 @@ function dataHandler(resp) {
   var savings = resp.rows[0][6];
   var cost = resp.rows[0][7];
   var timeBE = resp.rows[0][8];
+
+  // savings = savings.toFixed(2);
+  // cost = cost.toFixed(2);
+  // timeBE = timeBE.toFixed(2);
 	
 	document.getElementsByName('pastEnergySpend')[0].value = spend;
 	document.getElementsByName('pastEnergyUsage')[0].value = use;
@@ -215,7 +219,7 @@ function dataHandler(resp) {
             </div>
           </h3></td>
       </tr>
-        <tr>
+<!--         <tr>
         <td colspan="2" align="center"><h3>
             <div class="input-group">
               <div class="btn-group input-group">
@@ -224,7 +228,7 @@ function dataHandler(resp) {
             </div>
           </h3></td>
       </tr>
-        <tr>
+ -->        <tr>
         <td><h3>Annual savings
             <div class="input-group"> <span class="input-group-addon">£</span>
               <input type="text" name="solarSave" class="solar-spend" placeholder="0.00" readonly>
