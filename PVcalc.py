@@ -6,7 +6,7 @@ def solarIrradiance(): # in one year
 	return 1000 # kWh/m2 
 
 def efficiency():
-	return 0.1
+	return 0.15
 
 def moneySaved(Eg,P):
 	return feedInTariff(Eg,P) + exportAndSavings(Eg)
@@ -14,7 +14,7 @@ def moneySaved(Eg,P):
 def feedInTariff(Eg,P):
 	if 0 < P <= 4: # if power rating between 0 and 4kW...
 		f = 0.1438
-	elif 4 < P < 10:
+	elif 4 < P <= 10:
 		f = 0.1303
 	else:
 		f = 0.1213
@@ -28,5 +28,19 @@ def exportAndSavings(Eg,c=0.09,e=0.0477):
 def powerInstalled(A,p=0.15):
 	return A*p
 
-def calcAreaSolarPanels(A,ratio=0.05): # assume 5% coverage on flat roof by default
-	return A*ratio
+# A = area of polygon, roofRatio = ratio of polygon that is roof, coverage = amount of useful space covered in PV 
+def calcAreaSolarPanels(areaPoly,coverage=0.10,roofRatio=0.5,southOnly=True): 
+	areaPV = areaPoly * roofRatio * coverage
+	if southOnly:
+		areaPV *= 0.5
+	return areaPV
+
+# rate of 1500 pounds per kW
+def calcCostSolarPanels(P):
+	if 0 < P <= 4:
+		c = 1850
+	if 4 < P <= 10:
+		c = 1570
+	else:
+		c = 1330
+	return P*c
