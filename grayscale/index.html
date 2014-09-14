@@ -39,7 +39,7 @@
   <script>
   $(function() {
     var availableTags = [
-      "ST PAUL'S PRIMARY SCHOOL",
+      "ST PAULS PRIMARY SCHOOL",
       "ST VINCENTS RC JMI SCHOOL",
       "ETZ CHAIM PRIMARY SCHOOL",
       "WOODCROFT PRIMARY SCHOOL",
@@ -51,6 +51,7 @@
     $( "#schoolTags" ).autocomplete({
 		source : availableTags
 	});
+
   });
   
 $(document).ready(function() {
@@ -59,6 +60,33 @@ $(document).ready(function() {
 		$("#ex6SliderVal").text(slideEvt.value);
 		$("#slider-value").val(slideEvt.value);
 });
+
+
+ $('#schoolTags').on('autocompletechange', function () {
+        //alert('You selected: ' + this.value);
+		var school = this.value;
+		
+		var queryUrlHead = 'https://www.googleapis.com/fusiontables/v1/query?sql=';
+   	 var queryUrlTail = '&key=AIzaSyC6svy58WMzuhJzwpJzQcvxOe84LfymXHI';
+    var tableId = '1eHtrCzucL-wZZSQp43Yllp-2MlxL6uXo3xuvsPMK';
+
+    // write your SQL as normal, then encode it
+    var query = "SELECT * FROM " + tableId + " WHERE 'School name' = '" + school + "'";
+    var queryurl = encodeURI(queryUrlHead + query + queryUrlTail);
+
+    var jqxhr = $.get(queryurl, dataHandler, "jsonp");
+
+    }).change();
+	
+function dataHandler(resp) {
+    console.log(resp);
+	
+	var content = document.createTextNode(resp.rows[0][5]);
+    
+    alert(content);
+}
+
+
 })
   
   </script>
@@ -145,65 +173,65 @@ $(document).ready(function() {
 <!-- School Search Section -->
 <div class="container"> &nbsp;
     <table id="data-table" align="center">
-    <tr>
+    <form action="#" method="post" onsubmit="return Calculate()">
+        <tr>
         <td colspan="2" align="center"><h3>Find Your School
             <div class="input-group">
-            <input type="text" class="solar-spend" id="schoolTags">
-          </div>
+              <input type="text" class="solar-spend" id="schoolTags" name="schoolName">
+            </div>
           </h3></td>
       </tr>
-    <tr>
+        <tr>
         <td><h3>Usage
             <div class="input-group"> <span class="input-group-addon" style="font-size:16px">kW</span>
-            <input type="text" class="solar-spend" placeholder="0.00" style="width: 285px" readonly>
-          </div>
+              <input type="text" name="pastEnergyUsage" class="solar-spend" placeholder="0.00" style="width: 285px" readonly>
+            </div>
           </h3></td>
         <td><h3>Spend
             <div class="input-group"> <span class="input-group-addon">£</span>
-            <input type="text" class="solar-spend" placeholder="0.00" readonly>
-          </div>
+              <input type="text" name="pastEnergySpend" class="solar-spend" placeholder="0.00" readonly>
+            </div>
           </h3></td>
       </tr>
-
-  
-    <tr>
+        <tr>
         <td colspan="2" align="center"><h3>Roof Cover (%)
             <div class="input-group" style="display:inline-block">
-            <input id="ex6" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0" style="width: 300px;"/>
-        <div style="display:inline-block"> 
-            <input type="text" id="slider-value" class="solar-spend" placeholder="0" readonly style="width: 75px;">
-          </div></div>
+              <input id="ex6" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0" style="width: 300px;"/>
+              <div style="display:inline-block">
+                <input type="text" id="slider-value" class="solar-spend" placeholder="0" readonly style="width: 75px;">
+              </div>
+            </div>
           </h3></td>
-      <tr>
-  
-  
-    <tr>
+      </tr>
+        <tr>
         <td colspan="2" align="center"><h3>
             <div class="input-group">
-            <div class="btn-group input-group">
-                <button type="button" class="btn btn-primary" >Submit</button>
+              <div class="btn-group input-group">
+                <input type="submit" class="btn btn-primary"  value="Submit">
               </div>
-          </div>
+            </div>
           </h3></td>
-      <tr>
+      </tr>
+        <tr>
         <td><h3>Annual solar cost
             <div class="input-group"> <span class="input-group-addon">£</span>
-            <input type="text" class="solar-spend" placeholder="0.00" readonly>
-          </div>
+              <input type="text" class="solar-spend" placeholder="0.00" readonly>
+            </div>
           </h3></td>
         <td><h3>Up Front Cost
             <div class="input-group"> <span class="input-group-addon">£</span>
-            <input type="text" class="solar-spend" placeholder="0.00" readonly>
-          </div>
+              <input type="text" class="solar-spend" placeholder="0.00" readonly>
+            </div>
           </h3></td>
       </tr>
-    <tr>
+        <tr>
         <td colspan="2" align="center"><h3>Time to break even
             <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-time" style="font-size:18px"></i></span>
-            <input type="text" class="solar-spend" placeholder="0.00" readonly>
-          </div>
+              <input type="text" class="solar-spend" placeholder="0.00" readonly>
+            </div>
           </h3></td>
       </tr>
+      </form>
   </table>
   </div>
 

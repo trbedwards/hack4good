@@ -176,3 +176,13 @@ function init() {
         icon: image
     });
 }
+
+function Calculate() {
+
+var name = document.getElementsByName('schoolName')[0].value;
+var pastUse = document.getElementsByName('pastEnergyUsage')[0].value;
+var pastSpend = document.getElementsByName('pastEnergySpend')[0].value;
+alert("name: " +name + "  usage: " + pastUse + " spend: " + pastSpend);
+
+return true;   // Returns Value
+}
