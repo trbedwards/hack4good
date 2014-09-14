@@ -39,7 +39,7 @@
   <script>
   $(function() {
     var availableTags = [
-      "ST PAULS PRIMARY SCHOOL",
+      "ST  PAULS PRIMARY SCHOOL",
       "ST VINCENTS RC JMI SCHOOL",
       "ETZ CHAIM PRIMARY SCHOOL",
       "WOODCROFT PRIMARY SCHOOL",
@@ -78,12 +78,20 @@ $(document).ready(function() {
 
     }).change();
 	
-function dataHandler(resp) {
-    console.log(resp);
 	
-	var content = document.createTextNode(resp.rows[0][5]);
+	
+	
+function dataHandler(resp) {
+	var spend = resp.rows[0][5];
+	var use = resp.rows[0][4];
+	
+	document.getElementsByName('pastEnergySpend')[0].value = spend;
+	document.getElementsByName('pastEnergyUsage')[0].value = use;
     
-    alert(content);
+		
+	document.getElementsByName('solarSave')[0].value = spend * 5;
+	document.getElementsByName('upFront')[0].value = use * 2;
+   
 }
 
 
@@ -213,14 +221,14 @@ function dataHandler(resp) {
           </h3></td>
       </tr>
         <tr>
-        <td><h3>Annual solar cost
+        <td><h3>Annual savings
             <div class="input-group"> <span class="input-group-addon">£</span>
-              <input type="text" class="solar-spend" placeholder="0.00" readonly>
+              <input type="text" name="solarSave" class="solar-spend" placeholder="0.00" readonly>
             </div>
           </h3></td>
         <td><h3>Up Front Cost
             <div class="input-group"> <span class="input-group-addon">£</span>
-              <input type="text" class="solar-spend" placeholder="0.00" readonly>
+              <input type="text" name="upFront" class="solar-spend" placeholder="0.00" readonly>
             </div>
           </h3></td>
       </tr>
