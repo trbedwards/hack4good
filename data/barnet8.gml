@@ -14,7 +14,7 @@ xsi:schemaLocation="http://namespaces.ordnancesurvey.co.uk/vmd/v1.0 http://www.o
 <vmd:metadata xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.ordnancesurvey.co.uk/xml/products/VMD.xml"></vmd:metadata>
 <vmd:featureMember>
 <vmd:Building gml:id="os.vmd.TQ.697367">
-    <vmd:School>ST PAUL'S PRIMARY SCHOOL</vmd:School>
+    <vmd:School>ST PAULS PRIMARY SCHOOL</vmd:School>
 			<vmd:geometry>
 <gml:Surface gml:id="os.vmd.TQ.697367.geom" srsName="urn:ogc:def:crs:EPSG::27700">
 <gml:patches>
