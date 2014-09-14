@@ -84,13 +84,17 @@ $(document).ready(function() {
 function dataHandler(resp) {
 	var spend = resp.rows[0][5];
 	var use = resp.rows[0][4];
+  var savings = resp.rows[0][6];
+  var cost = resp.rows[0][7];
+  var timeBE = resp.rows[0][8];
 	
 	document.getElementsByName('pastEnergySpend')[0].value = spend;
 	document.getElementsByName('pastEnergyUsage')[0].value = use;
     
 		
-	document.getElementsByName('solarSave')[0].value = spend * 5;
-	document.getElementsByName('upFront')[0].value = use * 2;
+	document.getElementsByName('solarSave')[0].value = savings;
+	document.getElementsByName('upFront')[0].value = cost;
+  document.getElementsByName('timeBreakEven')[0].value = timeBE;
    
 }
 
@@ -233,9 +237,9 @@ function dataHandler(resp) {
           </h3></td>
       </tr>
         <tr>
-        <td colspan="2" align="center"><h3>Time to break even
+        <td colspan="2" align="center"><h3>Years to break even
             <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-time" style="font-size:18px"></i></span>
-              <input type="text" class="solar-spend" placeholder="0.00" readonly>
+              <input type="text" name = "timeBreakEven" class="solar-spend" placeholder="0" readonly>
             </div>
           </h3></td>
       </tr>
