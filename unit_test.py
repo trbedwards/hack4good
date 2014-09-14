@@ -13,28 +13,38 @@ class TestSequenceFunctions(unittest.TestCase):
         self.assertTrue(calcArea(coordinates)>0)
 
     def setUpPVcalc(self):
-    	buildingArea = calcBuildingArea(self.buildings[0])
+    	buildingArea = calcBuildingArea(self.building)
     	self.area = calcAreaSolarPanels(buildingArea)
     	self.irr = solarIrradiance()
     	self.eta = efficiency()
+    	self.Eg = calcEnergyGenerated(self.irr, self.area, self.eta)
 
-    def test_calcEg(self):
-    	self.setUpPVcalc()
-    	self.assertTrue(self.energyGen()>0)
-
-    def energyGen(self):
-    	return calcEnergyGenerated(self.irr, self.area, self.eta)
-
-    def test_calcMoneySaved(self):
-    	self.setUpPVcalc()
+    def calcMoneySaved(self):
+    	self.P = powerInstalled(self.area)
+    	self.M = moneySaved(self.Eg,self.P)
     	print "area = %f" % self.area
     	print "irradiance = %f" % self.irr
     	print "efficiency = %f" % self.eta
-    	P = powerInstalled(self.area)
-    	M = moneySaved(self.energyGen(),P)
-    	print "Power rating = %f kW" % P
-    	print "Money saved = %f" % M
-    	self.assertTrue(M>0)
+    	print "Power rating = %f kW" % self.P
+    	print "Money saved = %f" % self.M
+    	self.assertTrue(self.M>0)
+
+    def calcCost(self):
+    	self.cost = calcCostSolarPanels(self.P)
+
+    def calcTimeForBreakEven(self):
+		self.t = self.cost/self.M
+
+    def test_loopOverBuildings(self):
+    	for self.building in self.buildings:
+	    	print extractValue(self.building,'vmd:School')
+    		self.setUpPVcalc()	
+    		self.calcMoneySaved()
+    		self.calcCost()
+    		print "Up front cost = %f" % self.cost
+    		self.calcTimeForBreakEven()
+    		print "time for breakeven = %f years" % self.t
+    		print ""
 
 if __name__ == '__main__':
     unittest.main()
