@@ -37,37 +37,31 @@
   <!-- Custom Theme JavaScript -->
   <script src="js/grayscale.js"></script>
   <script>
-  $(function() {
-    var availableTags = [
-      "ST  PAULS PRIMARY SCHOOL",
-      "ST VINCENTS RC JMI SCHOOL",
-      "ETZ CHAIM PRIMARY SCHOOL",
-      "WOODCROFT PRIMARY SCHOOL",
-      "ANNUCIATION RC JUNIOR SCHOOL",
-      "MATHILDA MARKS KENNEDY",
-      "DEANSBROOK I AND J SCHOOL",
-      "MENORAH FOUNDATION SCHOOL"
-    ];
-    $( "#schoolTags" ).autocomplete({
-		source : availableTags
-	});
-
-  });
   
 $(document).ready(function() {
     $("#ex6").slider();
 	$("#ex6").on("slide", function(slideEvt) {
 		$("#ex6SliderVal").text(slideEvt.value);
 		$("#slider-value").val(slideEvt.value);
-});
+	});
 
+	/*Get list of schools from the Google table*/
+	var queryUrlHead = 'https://www.googleapis.com/fusiontables/v1/query?sql=';
+   	var queryUrlTail = '&key=AIzaSyC6svy58WMzuhJzwpJzQcvxOe84LfymXHI';
+    var tableId = '1eHtrCzucL-wZZSQp43Yllp-2MlxL6uXo3xuvsPMK';
+
+    // write your SQL as normal, then encode it
+    var query = "SELECT * FROM " + tableId;
+    var queryurl = encodeURI(queryUrlHead + query + queryUrlTail);
+
+    var schoolListFromGoogle = $.get(queryurl, schoolListDataHandler, "jsonp");
 
  $('#schoolTags').on('autocompletechange', function () {
-        //alert('You selected: ' + this.value);
-		var school = this.value;
+    //alert('You selected: ' + this.value);
+	var school = this.value;
 		
-		var queryUrlHead = 'https://www.googleapis.com/fusiontables/v1/query?sql=';
-   	 var queryUrlTail = '&key=AIzaSyC6svy58WMzuhJzwpJzQcvxOe84LfymXHI';
+	var queryUrlHead = 'https://www.googleapis.com/fusiontables/v1/query?sql=';
+   	var queryUrlTail = '&key=AIzaSyC6svy58WMzuhJzwpJzQcvxOe84LfymXHI';
     var tableId = '1eHtrCzucL-wZZSQp43Yllp-2MlxL6uXo3xuvsPMK';
 
     // write your SQL as normal, then encode it
@@ -79,11 +73,9 @@ $(document).ready(function() {
     }).change();
 	
 	
-	
-	
 function dataHandler(resp) {
 	var spend = resp.rows[0][5];
-	var use = resp.rows[0][4];
+	var useage = resp.rows[0][4];
   var savings = resp.rows[0][6];
   var cost = resp.rows[0][7];
   var timeBE = resp.rows[0][8];
@@ -102,7 +94,15 @@ function dataHandler(resp) {
    
 }
 
-
+function schoolListDataHandler(resp) {
+	var availableTags = [];
+	for(i = 0; i <resp.rows.length; i++){
+		availableTags.push(resp.rows[i][0]);
+	}
+	$( "#schoolTags" ).autocomplete({
+		source : availableTags
+	});
+	}
 })
   
   </script>
