@@ -71,8 +71,7 @@ $(document).ready(function() {
     var jqxhr = $.get(queryurl, dataHandler, "jsonp");
 
     }).change();
-	
-	
+    
 function dataHandler(resp) {
 	var spend = resp.rows[0][5];
 	var useage = resp.rows[0][4];
@@ -85,7 +84,7 @@ function dataHandler(resp) {
   // timeBE = timeBE.toFixed(2);
 	
 	document.getElementsByName('pastEnergySpend')[0].value = spend;
-	document.getElementsByName('pastEnergyUsage')[0].value = use;
+	document.getElementsByName('pastEnergyUsage')[0].value = useage;
     
 		
 	document.getElementsByName('solarSave')[0].value = savings;
@@ -266,6 +265,22 @@ function schoolListDataHandler(resp) {
         <li> <a href="https://www.facebook.com/wwwfoecouk" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">Facebook</span></a> </li>
       </ul>
       </div>
+      
+      <form role="form" class="col-md-9 go-right" id="contact-form">
+			<div class="form-group">
+			<input id="name" name="name" type="text" class="form-control" required>
+			<label for="name">Your Name</label>
+		</div>
+		<div class="form-group">
+			<input id="phone" name="phone" type="tel" class="form-control" required>
+			<label for="phone">Primary Phone</label>
+		</div>
+		<div class="form-group">
+			<textarea id="message" name="phone" class="form-control" required></textarea>
+			<label for="message">Message</label>
+		</div>
+		</form>
+      
   </div>
   </section>
 
