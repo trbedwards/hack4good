@@ -57,25 +57,24 @@ $(document).ready(function() {
     var schoolListFromGoogle = $.get(queryurl, schoolListDataHandler, "jsonp");
 
  $('#schoolTags').on('autocompletechange', function () {
-    $('.ui-helper-hidden-accessible').hide();
-	event.preventDefault();
+    //alert('You selected: ' + this.value);
 	var school = this.value;
 		
 	var queryUrlHead = 'https://www.googleapis.com/fusiontables/v1/query?sql=';
    	var queryUrlTail = '&key=AIzaSyC6svy58WMzuhJzwpJzQcvxOe84LfymXHI';
-    	var tableId = '1eHtrCzucL-wZZSQp43Yllp-2MlxL6uXo3xuvsPMK';
+    var tableId = '1eHtrCzucL-wZZSQp43Yllp-2MlxL6uXo3xuvsPMK';
 
-    	// write your SQL as normal, then encode it
-	var query = "SELECT * FROM " + tableId + " WHERE 'School name' = '" + school + "'";
-    	var queryurl = encodeURI(queryUrlHead + query + queryUrlTail);
+    // write your SQL as normal, then encode it
+    var query = "SELECT * FROM " + tableId + " WHERE 'School name' = '" + school + "'";
+    var queryurl = encodeURI(queryUrlHead + query + queryUrlTail);
 
-    	var jqxhr = $.get(queryurl, dataHandler, "jsonp");
+    var jqxhr = $.get(queryurl, dataHandler, "jsonp");
 
     }).change();
     
 function dataHandler(resp) {
 	var spend = resp.rows[0][5];
-	var use = resp.rows[0][4];
+	var useage = resp.rows[0][4];
   var savings = resp.rows[0][6];
   var cost = resp.rows[0][7];
   var timeBE = resp.rows[0][8];
@@ -266,7 +265,6 @@ function schoolListDataHandler(resp) {
         <li> <a href="https://www.facebook.com/wwwfoecouk" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">Facebook</span></a> </li>
       </ul>
       </div>
-      
       <form role="form" class="col-md-9 go-right" id="contact-form">
 			<div class="form-group">
 			<input id="name" name="name" type="text" class="form-control" required>
@@ -281,7 +279,6 @@ function schoolListDataHandler(resp) {
 			<label for="message">Message</label>
 		</div>
 		</form>
-      
   </div>
   </section>
 
@@ -291,5 +288,7 @@ function schoolListDataHandler(resp) {
     <p>Copyright &copy; Run On Sun 2014</p>
   </div>
   </footer>
+  
+  
 </body>
 </html>
