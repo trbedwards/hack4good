@@ -36,6 +36,8 @@
 
   <!-- Custom Theme JavaScript -->
   <script src="js/grayscale.js"></script>
+   <script src="js/jqBootstrapValidation.js"></script>
+ <script src="js/contact_me.js"></script>
   <script>
   
 $(document).ready(function() {
@@ -271,14 +273,16 @@ function schoolListDataHandler(resp) {
 			<label for="name">Your Name</label>
 		</div>
 		<div class="form-group">
-			<input id="phone" name="phone" type="tel" class="form-control" required>
-			<label for="phone">Primary Phone</label>
+			<input id="email" name="email" type="email" class="form-control" required>
+			<label for="email">Email</label>
 		</div>
 		<div class="form-group">
 			<textarea id="message" name="phone" class="form-control" required></textarea>
 			<label for="message">Message</label>
 		</div>
+		  <button type="submit" class="btn btn-primary pull-right">Send</button><br />
 		</form>
+		
   </div>
   </section>
 
