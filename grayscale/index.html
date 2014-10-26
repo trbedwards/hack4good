@@ -267,7 +267,7 @@ function schoolListDataHandler(resp) {
         <li> <a href="https://www.facebook.com/wwwfoecouk" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">Facebook</span></a> </li>
       </ul>
       </div>
-      <form role="form" class="col-md-9 go-right" id="contact-form">
+      <form role="form" method="post" action="php/emailContact.php" class="col-md-9 go-right" id="contact-form">
 			<div class="form-group">
 			<input id="name" name="name" type="text" class="form-control" required>
 			<label for="name">Your Name</label>
@@ -281,6 +281,7 @@ function schoolListDataHandler(resp) {
 			<label for="message">Message</label>
 		</div>
 		  <button type="submit" class="btn btn-primary pull-right">Send</button><br />
+		<div id="success"> </div> <!-- For success/fail messages -->
 		</form>
 		
   </div>
