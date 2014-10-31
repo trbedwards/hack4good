@@ -4,6 +4,7 @@ import matplotlib.patches as patches
 import numpy as np
 from xml.dom import minidom
 from shapely.geometry.polygon import Polygon
+from postcodes import PostCoder
 
 # reads gml file and returns a dom object
 def read_gml(file='data/test4.gml'):
@@ -50,8 +51,7 @@ def extractValue(doc,tagname):
 	return doc.getElementsByTagName(tagname)[0].firstChild.nodeValue
 
 def extractElements(gmldoc,tagname='vmd:Building'):
-	elements = gmldoc.getElementsByTagName(tagname)
-	return elements
+	return gmldoc.getElementsByTagName(tagname)
 
 def calcBuildingArea(building):
 	return calcMultiArea(building,'gml:exterior') - calcMultiArea(building,'gml:interior')	
@@ -110,3 +110,65 @@ def createFigure(buildings,boundaries=None):
 		ax.add_patch(patch)
 
 	plt.show()
+
+def loadBuildings(gmlfile,tagname='vmd:Building'):
+	gmldoc = read_gml(gmlfile)
+	return gmldoc,extractElements(gmldoc,tagname=tagname)
+
+def calcDists(pxy,buildingsPos):
+	distances = np.zeros(len(buildingsPos)) 
+	i = 0
+	for bxy in buildingsPos:
+		distances[i] = calcDist(pxy,bxy)
+		i+=1
+	return distances
+
+def calcDist(u,v):
+	dx = u[0]-v[0]
+	dy = u[1]-v[1]
+	return dx*dx + dy*dy 
+
+def locationOfPostcode(postcode):
+	pc = PostCoder()
+	result = pc.get(postcode)
+	x = result['geo']['easting']
+	y = result['geo']['northing']
+	return x,y
+
+def locationOfBuilding(building):
+	coordinates = extractValue(building,'gml:posList').split()	
+	verts = np.array(coordinates,dtype=float).reshape(len(coordinates)/2,2)
+	return calcCentre(verts)
+
+def appendObject(doc,parent,tag,value):
+	child = createObject(doc,tag,value)
+	parent.appendChild(child)
+
+def createObject(doc,tag,value):
+	obj = doc.createElement(tag)
+	txt = doc.createTextNode(value)
+	obj.appendChild(txt)
+	return obj
+
+def replaceFeatures(gmldoc,newFeatures):
+	oldFeatures = extractElements(gmldoc,'vmd:featureMember')
+	featureCollection = extractElements(gmldoc,'vmd:featureCollection')
+	for feature in oldFeatures:
+		featureCollection.removeChild(feature)
+	for feature in newFeatures:
+		featureCollection.appendChild(feature)
+
+def createNewGml(fileName,buildings):
+	newDoc = minidom.Document()
+	featureCollection = newDoc.createElement('vmd:FeatureCollection')
+	for building in buildings:
+		feature = newDoc.createElement('vmd:featureMember')
+		feature.appendChild(building)
+		featureCollection.appendChild(feature)
+	newDoc.appendChild(featureCollection)
+	writeGml2file(fileName,newDoc)
+
+def writeGml2file(fileName,doc,flag='w'):
+	with open(fileName, flag) as f:
+		doc.writexml(f)
+		f.close()
