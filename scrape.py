@@ -3,6 +3,7 @@ import urllib
 import json
 from PVcalc import PVcalc
 from utils import *
+from latlon_to_bng import WGS84toOSGB36
 # import utm
 from gml_parser import *
 
